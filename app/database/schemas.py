@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import date
-from typing import Optional, List
+from typing import Optional, List, Dict
 
 class DailyCampaignBase(BaseModel):
     campaign_id: str
@@ -33,3 +33,38 @@ class CampaignsResponse(BaseModel):
 
 class ScoresResponse(BaseModel):
     scores: List[DailyScoreBase]
+
+class CampaignCard(BaseModel):
+    campaignName: str
+    range: str
+    days: int
+
+class CurrentMetrics(BaseModel):
+    impressions: int
+    clicks: int
+    views: int
+
+class PerformanceMetrics(BaseModel):
+    currentMetrics: CurrentMetrics
+
+class ImpressionsCpm(BaseModel):
+    impression: Dict[str, int]
+    cpm: Dict[str, float]
+
+class VolumeUnitCostTrend(BaseModel):
+    impressionsCpm: ImpressionsCpm
+
+class CampaignTable(BaseModel):
+    start_date: List[str]
+    end_date: List[str]
+    adin_id: List[str]
+    campaign: List[str]
+    effectiveness: List[float]
+    media: List[float]
+    creative: List[float]
+
+class SummaryResponse(BaseModel):
+    campaignCard: CampaignCard
+    performanceMetrics: PerformanceMetrics
+    volumeUnitCostTrend: VolumeUnitCostTrend
+    campaignTable: CampaignTable
