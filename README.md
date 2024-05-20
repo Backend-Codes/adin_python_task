@@ -17,7 +17,7 @@ This project provides an API that summarizes campaign data from an SQL database 
 1. Clone the project:
 
     ```bash
-    git clone https://github.com/your-repo/campaign-summary-api.git
+    git clone https://github.com/Backend-Codes/adin_python_task.git
     cd campaign-summary-api
     ```
 
@@ -41,13 +41,19 @@ If you want to use Docker, you can easily run your project with Docker:
 1. Build the Docker image:
 
     ```bash
-    docker build -t campaign-summary-api .
+    docker build -t adin_python_task .
     ```
 
 2. Start the Docker container:
 
     ```bash
-    docker run -d -p 8000:8000 --name campaign-summary-api campaign-summary-api
+    docker run -d -p 8000:8000 --name adin_python_task \
+        -e DATABASE_HOSTNAME="hostname" \
+        -e DATABASE_PORT="port" \
+        -e DATABASE_NAME="dbname" \
+        -e DATABASE_USERNAME="db username" \
+        -e DATABASE_PASSWORD="db password" \
+        adin_python_task
     ```
 
 ### Environment Variables
