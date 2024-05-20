@@ -26,6 +26,9 @@ def get_summary(db: Session, campaign_id: str = None, start_date: str = None, en
     start_date = datetime.strptime(start_date, "%Y-%m-%d") if start_date else None
     end_date = datetime.strptime(end_date, "%Y-%m-%d") if end_date else None
 
+    if start_date and end_date and start_date > end_date:
+        raise HTTPException(status_code=422, detail="Invalid date range: start_date must be before end_date")
+
     start_date_minus_one = start_date - timedelta(days=1) if start_date else None
 
     campaigns_query = db.query(models.DailyCampaign)
