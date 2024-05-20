@@ -18,6 +18,11 @@ def get_scores(db: Session, campaign_id: str = None):
         return db.query(models.DailyScore).all()
 
 def get_summary(db: Session, campaign_id: str = None, start_date: str = None, end_date: str = None):
+    if not start_date:
+        start_date = "2023-03-20"
+    if not end_date:
+        end_date = "2023-12-30"
+
     start_date = datetime.strptime(start_date, "%Y-%m-%d") if start_date else None
     end_date = datetime.strptime(end_date, "%Y-%m-%d") if end_date else None
 
@@ -61,8 +66,8 @@ def get_summary(db: Session, campaign_id: str = None, start_date: str = None, en
 
     for campaign in campaigns:
         date_str = campaign.date.strftime('%Y-%m-%d')
-        impression_trend[date_str] = campaign.impressions
-        cpm_trend[date_str] = campaign.cpm
+        impression_trend[date_str] += campaign.impressions
+        cpm_trend[date_str] += campaign.cpm
 
     for score in scores:
         if isinstance(score.start_date, str):
